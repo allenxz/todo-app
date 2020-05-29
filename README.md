@@ -14,10 +14,6 @@
 
 ## 预览
 
-![](./preview.jpg)
-
-
-
-
+![](https://s1.ax1x.com/2020/05/29/tmyj4x.jpg)
 
 > 参考：https://codepen.io/iamjoshellis/pen/zBjEpL
