@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <title>todo</title>
+  </head>
+  <body>
+    <div class="root">
+      <div class="todo-app">
+        <h1 class="todo-title"></h1>
+        <ul class="todo-list"></ul>
+        <div class="add-todo">
+          <input class="add-todo__input" placeholder="Add New" /><button
+            class="add-todo__btn"
+          >
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <div class="filters">
+          <a id="init" class="filter__link" href="#"
+            ><i class="fa fa-magic" title="初始化"></i
+          ></a>
+          <!-- <a class="filter__link" href="#"><i class="fa fa-times" title="清空"></i></a> -->
+          <a id="reset" class="filter__link" href="#"><i class="fa fa-undo" title="重置"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>

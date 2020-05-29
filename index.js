@@ -1,0 +1,101 @@
+const config = {
+  name: 'Todo',
+  list: {
+    '表单中标签或输入控件未对齐':1,
+    '表格中同一行或者同一列文本未对齐':1,
+    '同一容器内水平方向文本或垂直方向文本未对齐':1,
+    '重要操作缺少结果反馈':1,
+    '反馈信息不友好':1,
+    '关键字段缺少必填限制':1,
+    '表单字段缺少长度限制':1,
+    '表单特殊字段缺少验证规则限制':1,
+    '重新打开表单界面却显示上一次验证结果':1,
+    '表单中文本过长导致显示异常':1,
+    '表格中单元格文本过长导致显示异常':1,
+    '其他描述类文本过长导致显示异常':1,
+    '界面排版异常':1,
+    '界面出现错别字':1,
+    '前端控件的基本功能未正常运作':1,
+    '一个功能页面的基本功能出错':1,
+    '简单的用户故事场景操作出错':1,
+  }
+}
+
+// 清空list
+function clearList () {
+  let _list = document.querySelector('.todo-list')
+  _list.innerHTML = ''
+}
+
+// 渲染列表
+function renderList (node, list) {
+  for (let key in list) {
+    renderSingleItem(node,list,key)
+  }
+}
+
+// 渲染单一项
+function renderSingleItem (node,list,key) {
+  let span = document.createElement('span')
+  span.innerHTML = key
+  span.className = 'todo__content'
+  let li = document.createElement('li')
+  li.className = list[key] === 1 ? 'todo' : 'todo todo--completed'
+  li.appendChild(span)
+  // 可用事件委托进行优化
+  li.addEventListener('click',()=>{
+    let list = JSON.parse(localStorage.getItem('todo-app'))
+    li.className = li.className === 'todo'? 'todo todo--completed': 'todo'
+    list[key] = -list[key]
+    localStorage.setItem('todo-app',JSON.stringify(list))
+  })
+  node.appendChild(li)
+}
+
+// 初始化
+let flag = localStorage.getItem('todo-app')
+if (!flag) {
+  localStorage.setItem('todo-app',JSON.stringify(config.list))
+}
+
+// 注入title
+let _title = document.querySelector('.todo-title')
+_title.innerHTML = config.name
+
+// 注入list
+let _list = document.querySelector('.todo-list')
+let content = JSON.parse(localStorage.getItem('todo-app'))
+renderList(_list,content)
+
+// 处理新增todo项
+let addTrigger = document.querySelector('.add-todo__btn')
+addTrigger.addEventListener('click', ()=> {
+  let todoText = document.querySelector('.add-todo__input').value
+  // 新增项本地持久化
+  let list = JSON.parse(localStorage.getItem('todo-app'))
+  list[todoText] = 1
+  localStorage.setItem('todo-app',JSON.stringify(list))
+  renderSingleItem(_list,list,todoText)
+  document.querySelector('.add-todo__input').value = ''
+})
+
+// 绑定重置事件
+let resetTrigger = document.querySelector('#reset')
+resetTrigger.addEventListener('click',()=>{
+  let list = JSON.parse(localStorage.getItem('todo-app'))
+  // 重置标记
+  for(let key in list){
+    list[key]= 1
+  }
+  clearList()
+  renderList(_list,list)
+  localStorage.setItem('todo-app',JSON.stringify(list))
+})
+
+// 绑定初始化事件
+let initTrigger = document.querySelector('#init')
+initTrigger.addEventListener('click',()=>{
+  clearList()
+  renderList(_list,config.list)
+  localStorage.setItem('todo-app',JSON.stringify(config.list))
+})
